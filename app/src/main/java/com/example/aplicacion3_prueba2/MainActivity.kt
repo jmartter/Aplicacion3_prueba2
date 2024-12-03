@@ -21,8 +21,6 @@ class MainActivity : ComponentActivity() {
 
         // Referencia a los elementos de la interfaz
         jsonTextView = findViewById(R.id.jsonTextView)
-        val buttonInfo: Button = findViewById(R.id.buttonInfo)
-        val buttonBack: Button = findViewById(R.id.buttonBack)
         val buttonSimpleInfo: Button = findViewById(R.id.buttonSimpleInfo)
         simpleInfoLayout = findViewById(R.id.simpleInfoLayout)
 
@@ -30,30 +28,8 @@ class MainActivity : ComponentActivity() {
         val json = assets.open("data.json").bufferedReader().use(BufferedReader::readText)
         jsonObject = JSONObject(json)
 
-        // Configuración de los botones
-        buttonInfo.setOnClickListener { showInfo() }
-        buttonBack.setOnClickListener { finish() }
+        // Configuración del botón
         buttonSimpleInfo.setOnClickListener { showSimpleInfo() }
-    }
-
-    private fun showInfo() {
-        val featuresArray = jsonObject.getJSONArray("features")
-        val info = StringBuilder()
-
-        for (i in 0 until featuresArray.length()) {
-            val feature = featuresArray.getJSONObject(i)
-            val properties = feature.getJSONObject("properties")
-            val title = properties.getString("title")
-            var description = properties.getString("description")
-            val link = properties.getString("link")
-            val coordinates = feature.getJSONObject("geometry").getJSONArray("coordinates")
-
-            info.append("Title ${i + 1}: $title\n")
-            info.append("Description ${i + 1}: $description\n")
-            info.append("Link ${i + 1}: $link\n")
-            info.append("Coordinates ${i + 1}: ${coordinates.join(", ")}\n\n")
-        }
-        jsonTextView.text = info.toString()
     }
 
     private fun showSimpleInfo() {
