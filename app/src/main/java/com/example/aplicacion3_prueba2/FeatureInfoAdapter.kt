@@ -33,10 +33,10 @@ class FeatureInfoAdapter(private val context: Context) {
         val imageView = ImageView(context)
         imageView.setImageResource(R.drawable.farmacia)
         val imageParams = LinearLayout.LayoutParams(
-            110, // Ancho de la imagen
-            110  // Alto de la imagen
+            140, // Ancho de la imagen
+            140  // Alto de la n
         )
-        imageParams.setMargins(0, 0, 16, 0)
+        imageParams.setMargins(0, 20, 16, 0)
         imageView.layoutParams = imageParams
         itemLayout.addView(imageView)
 
