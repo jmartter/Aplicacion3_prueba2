@@ -1,11 +1,14 @@
 package com.example.aplicacion3_prueba2
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import com.example.exameneventosv3.CoordinateConverter
 import org.json.JSONObject
 import java.io.BufferedReader
 
@@ -55,6 +58,11 @@ class MainActivity : ComponentActivity() {
             val title = properties.getString("title")
             val description = properties.getString("description")
             val coordinates = feature.getJSONObject("geometry").getJSONArray("coordinates")
+            val easting = coordinates.getDouble(0) // Asume que las coordenadas están en formato [easting, northing]
+            val northing = coordinates.getDouble(1)
+
+            // Convertir las coordenadas UTM a latitud y longitud
+            val (latitude, longitude) = CoordinateConverter.utmToLatLon(easting, northing)
 
             // Extraer el número de teléfono de la descripción
             val phoneRegex = "Teléfono: (\\d+)".toRegex()
@@ -84,8 +92,15 @@ class MainActivity : ComponentActivity() {
 
             // Crear y agregar TextView
             val textView = TextView(this)
-            textView.text = "Title ${i + 1}: $title\nPhone ${i + 1}: $phoneNumber\nCoordinates ${i + 1}: ${coordinates.join(", ")}\n"
+            textView.text = "Title ${i + 1}: $title\nPhone ${i + 1}: $phoneNumber\nCoordinates ${i + 1}: ${latitude}, ${longitude}\n"
             itemLayout.addView(textView)
+
+            // Configurar evento OnClickListener para abrir Google Maps
+            itemLayout.setOnClickListener {
+                val mapsUrl = "https://www.google.com/maps?q=$latitude,$longitude"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapsUrl))
+                startActivity(intent)
+            }
 
             // Agregar el itemLayout al simpleInfoLayout
             simpleInfoLayout.addView(itemLayout)
