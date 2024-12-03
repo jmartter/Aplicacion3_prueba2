@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -86,6 +87,12 @@ class MainActivity : ComponentActivity() {
             val textView = TextView(this)
             textView.text = "Title ${i + 1}: $title\nPhone ${i + 1}: $phoneNumber\nCoordinates ${i + 1}: ${coordinates.join(", ")}\n"
             itemLayout.addView(textView)
+
+            // Establecer el OnClickListener para cada item
+            itemLayout.setOnClickListener {
+                // Mostrar un Toast con el nombre de la farmacia al hacer clic
+                Toast.makeText(this, "Clic en la farmacia: $title", Toast.LENGTH_SHORT).show()
+            }
 
             // Agregar el itemLayout al simpleInfoLayout
             simpleInfoLayout.addView(itemLayout)
