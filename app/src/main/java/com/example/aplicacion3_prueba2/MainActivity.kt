@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
         val buttonLink: Button = findViewById(R.id.buttonLink)
         val buttonDescription: Button = findViewById(R.id.buttonDescription)
         val buttonTelefono: Button = findViewById(R.id.buttonTelefono)
+        val buttonInfo: Button = findViewById(R.id.buttonInfo)
 
         // Lee el archivo JSON desde assets
         val json = assets.open("data.json").bufferedReader().use(BufferedReader::readText)
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
         buttonLink.setOnClickListener { showSpecificField("link") }
         buttonDescription.setOnClickListener { showSpecificField("description") }
         buttonTelefono.setOnClickListener { showTelefonos() }
+        buttonInfo.setOnClickListener { showInfo() }
     }
 
     private fun showSpecificField(field: String) {
@@ -75,5 +77,25 @@ class MainActivity : ComponentActivity() {
             telefonos.append("Teléfono ${i + 1}: $telefono\n")
         }
         jsonTextView.text = telefonos.toString()
+    }
+
+    private fun showInfo() {
+        val featuresArray = jsonObject.getJSONArray("features")
+        val info = StringBuilder()
+
+        for (i in 0 until featuresArray.length()) {
+            val feature = featuresArray.getJSONObject(i)
+            val properties = feature.getJSONObject("properties")
+            val title = properties.getString("title")
+            val description = properties.getString("description")
+            val link = properties.getString("link")
+            val coordinates = feature.getJSONObject("geometry").getJSONArray("coordinates")
+
+            info.append("Title ${i + 1}: $title\n")
+            info.append("Description ${i + 1}: $description\n")
+            info.append("Link ${i + 1}: $link\n")
+            info.append("Coordinates ${i + 1}: ${coordinates.join(", ")}\n\n")
+        }
+        jsonTextView.text = info.toString()
     }
 }
