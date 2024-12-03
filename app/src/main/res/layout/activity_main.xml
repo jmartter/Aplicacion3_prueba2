@@ -10,22 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/jsonTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="El contenido aparecerá aquí"
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:background="#EDEDED"
-            android:layout_marginBottom="16dp" />
-
+        <!-- Botón para mostrar la información -->
         <Button
             android:id="@+id/buttonSimpleInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Mostrar Información Simple" />
 
+        <!-- Layout para mostrar la información generada dinámicamente -->
         <LinearLayout
             android:id="@+id/simpleInfoLayout"
             android:layout_width="match_parent"

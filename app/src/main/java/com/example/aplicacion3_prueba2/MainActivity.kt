@@ -14,7 +14,6 @@ import java.io.BufferedReader
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var jsonTextView: TextView
     private lateinit var jsonObject: JSONObject
     private lateinit var simpleInfoLayout: LinearLayout
     private var isInfoVisible = false  // Variable para controlar si la lista está visible
@@ -24,7 +23,6 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
 
         // Referencia a los elementos de la interfaz
-        jsonTextView = findViewById(R.id.jsonTextView)
         val buttonSimpleInfo: Button = findViewById(R.id.buttonSimpleInfo)
         simpleInfoLayout = findViewById(R.id.simpleInfoLayout)
 
