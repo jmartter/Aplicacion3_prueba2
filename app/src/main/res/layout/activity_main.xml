@@ -10,6 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dp" />
+
         <TextView
             android:id="@+id/jsonTextView"
             android:layout_width="match_parent"
@@ -21,39 +29,9 @@
             android:layout_marginBottom="16dp" />
 
         <Button
-            android:id="@+id/buttonTitle"
+            android:id="@+id/buttonInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mostrar Titles" />
-
-        <Button
-            android:id="@+id/buttonCoordinates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mostrar Coordinates" />
-
-        <Button
-            android:id="@+id/buttonLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mostrar Links" />
-
-        <Button
-            android:id="@+id/buttonDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mostrar Descriptions" />
-
-        <Button
-            android:id="@+id/buttonTelefono"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mostrar Teléfonos" />
-
-        <Button
-    android:id="@+id/buttonInfo"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Mostrar Información" />
+            android:text="Mostrar Información" />
     </LinearLayout>
 </ScrollView>
