@@ -1,47 +1,72 @@
 package com.example.aplicacion3_prueba2
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.aplicacion3_prueba2.ui.theme.Aplicacion3_prueba2Theme
+import com.example.exameneventosv3.CoordinateConverter
+import org.json.JSONObject
+import java.io.BufferedReader
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var jsonObject: JSONObject
+    private lateinit var simpleInfoLayout: LinearLayout
+    private var isInfoVisible = false  // Variable para controlar si la lista está visible
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Aplicacion3_prueba2Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
+        setContentView(R.layout.activity_main)
+
+        // Referencia a los elementos de la interfaz
+        val buttonSimpleInfo: Button = findViewById(R.id.buttonSimpleInfo)
+        simpleInfoLayout = findViewById(R.id.simpleInfoLayout)
+
+        // Lee el archivo JSON desde assets
+        val json = assets.open("data.json").bufferedReader().use(BufferedReader::readText)
+        jsonObject = JSONObject(json)
+
+        // Configuración del botón
+        buttonSimpleInfo.setOnClickListener { toggleSimpleInfo() }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    private fun toggleSimpleInfo() {
+        if (isInfoVisible) {
+            // Si la lista está visible, la eliminamos
+            simpleInfoLayout.removeAllViews()
+        } else {
+            // Si la lista no está visible, la mostramos
+            showSimpleInfo()
+        }
+        // Alternar el estado de visibilidad
+        isInfoVisible = !isInfoVisible
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Aplicacion3_prueba2Theme {
-        Greeting("Android")
+    private fun showSimpleInfo() {
+        val featuresArray = jsonObject.getJSONArray("features")
+        simpleInfoLayout.removeAllViews()
+        val adapter = FeatureInfoAdapter(this)
+
+        for (i in 0 until featuresArray.length()) {
+            val feature = featuresArray.getJSONObject(i)
+            val properties = feature.getJSONObject("properties")
+            val title = properties.getString("title")
+            val description = properties.getString("description")
+            val coordinates = feature.getJSONObject("geometry").getJSONArray("coordinates")
+            val easting = coordinates.getDouble(0) // Asume que las coordenadas están en formato [easting, northing]
+            val northing = coordinates.getDouble(1)
+
+            // Convertir las coordenadas UTM a latitud y longitud
+            val (latitude, longitude) = CoordinateConverter.utmToLatLon(easting, northing)
+
+            // Extraer el número de teléfono de la descripción
+            val phoneRegex = "Teléfono: (\\d+)".toRegex()
+            val phoneMatch = phoneRegex.find(description)
+            val phoneNumber = phoneMatch?.groups?.get(1)?.value ?: "N/A"
+
+            val featureInfo = FeatureInfo(title, description, phoneNumber, latitude, longitude)
+            val featureView = adapter.createFeatureView(featureInfo)
+            simpleInfoLayout.addView(featureView)
+        }
     }
 }
