@@ -16,6 +16,6 @@ object CoordinateConverter {
         val destCoord = ProjCoordinate()
         val transform = transformFactory.createTransform(utmCRS, geoCRS)
         transform.transform(srcCoord, destCoord)
-        return Pair(destCoord.y, destCoord.x) // (latitude, longitude)
+        return Pair(destCoord.y, destCoord.x)
     }
 }
