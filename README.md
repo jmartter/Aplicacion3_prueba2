@@ -4,7 +4,7 @@ Este proyecto es una aplicación de Android que muestra información sobre varia
 
 ## Repositorio
 
-El código fuente de la aplicación se encuentra en el siguiente repositorio de GitHub: [Aplicacion2_prueba2](https://github.com/jmartter/Aplicacion3_prueba2.git)
+El código fuente de la aplicación se encuentra en el siguiente repositorio de GitHub: [Aplicacion3_prueba2](https://github.com/jmartter/Aplicacion3_prueba2.git)
 ## Clases
 
 ### CoordinateConverter
