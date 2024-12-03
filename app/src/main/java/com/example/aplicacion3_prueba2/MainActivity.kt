@@ -1,12 +1,8 @@
 package com.example.aplicacion3_prueba2
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.ComponentActivity
 import com.example.exameneventosv3.CoordinateConverter
 import org.json.JSONObject
@@ -49,6 +45,7 @@ class MainActivity : ComponentActivity() {
     private fun showSimpleInfo() {
         val featuresArray = jsonObject.getJSONArray("features")
         simpleInfoLayout.removeAllViews()
+        val adapter = FeatureInfoAdapter(this)
 
         for (i in 0 until featuresArray.length()) {
             val feature = featuresArray.getJSONObject(i)
@@ -67,41 +64,9 @@ class MainActivity : ComponentActivity() {
             val phoneMatch = phoneRegex.find(description)
             val phoneNumber = phoneMatch?.groups?.get(1)?.value ?: "N/A"
 
-            // Crear un LinearLayout horizontal para la imagen y el texto
-            val itemLayout = LinearLayout(this)
-            itemLayout.orientation = LinearLayout.HORIZONTAL
-            val itemParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            itemParams.setMargins(0, 0, 0, 16)
-            itemLayout.layoutParams = itemParams
-
-            // Crear y agregar ImageView
-            val imageView = ImageView(this)
-            imageView.setImageResource(R.drawable.farmacia)
-            val imageParams = LinearLayout.LayoutParams(
-                110, // Ancho de la imagen
-                110  // Alto de la imagen
-            )
-            imageParams.setMargins(0, 0, 16, 0)
-            imageView.layoutParams = imageParams
-            itemLayout.addView(imageView)
-
-            // Crear y agregar TextView
-            val textView = TextView(this)
-            textView.text = "Title ${i + 1}: $title\nPhone ${i + 1}: $phoneNumber\nCoordinates ${i + 1}: ${latitude}, ${longitude}\n"
-            itemLayout.addView(textView)
-
-            // Configurar evento OnClickListener para abrir Google Maps
-            itemLayout.setOnClickListener {
-                val mapsUrl = "https://www.google.com/maps?q=$latitude,$longitude"
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapsUrl))
-                startActivity(intent)
-            }
-
-            // Agregar el itemLayout al simpleInfoLayout
-            simpleInfoLayout.addView(itemLayout)
+            val featureInfo = FeatureInfo(title, description, phoneNumber, latitude, longitude)
+            val featureView = adapter.createFeatureView(featureInfo)
+            simpleInfoLayout.addView(featureView)
         }
     }
 }
