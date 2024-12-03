@@ -14,6 +14,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var jsonTextView: TextView
     private lateinit var jsonObject: JSONObject
     private lateinit var simpleInfoLayout: LinearLayout
+    private var isInfoVisible = false  // Variable para controlar si la lista está visible
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,19 @@ class MainActivity : ComponentActivity() {
         jsonObject = JSONObject(json)
 
         // Configuración del botón
-        buttonSimpleInfo.setOnClickListener { showSimpleInfo() }
+        buttonSimpleInfo.setOnClickListener { toggleSimpleInfo() }
+    }
+
+    private fun toggleSimpleInfo() {
+        if (isInfoVisible) {
+            // Si la lista está visible, la eliminamos
+            simpleInfoLayout.removeAllViews()
+        } else {
+            // Si la lista no está visible, la mostramos
+            showSimpleInfo()
+        }
+        // Alternar el estado de visibilidad
+        isInfoVisible = !isInfoVisible
     }
 
     private fun showSimpleInfo() {
