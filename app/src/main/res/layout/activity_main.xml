@@ -32,6 +32,20 @@
             android:id="@+id/buttonInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mostrar Información" />
+            android:text="Mostrar Información"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/buttonSimpleInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mostrar Información Simple" />
+
+        <LinearLayout
+            android:id="@+id/simpleInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
 </ScrollView>
