@@ -61,6 +61,6 @@ La clase `MainActivity` es el punto de entrada principal de la aplicación. Mane
 
 La aplicación lee datos de un archivo JSON ubicado en la carpeta `assets`. El archivo JSON contiene un array de características, cada una con propiedades como título, descripción y coordenadas.
 
-### Ejemplo de la lista de farmacias 
+## Ejemplo de la lista de farmacias 
 
 <img src="app/src/main/res/drawable/pantalla1.png" alt="Lista de farmacias" width="200"/>
