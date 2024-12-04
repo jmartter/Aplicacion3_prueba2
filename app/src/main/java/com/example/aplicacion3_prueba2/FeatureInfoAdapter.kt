@@ -33,21 +33,25 @@ class FeatureInfoAdapter(private val context: Context) {
         val imageView = ImageView(context)
         imageView.setImageResource(R.drawable.farmacia)
         val imageParams = LinearLayout.LayoutParams(
-            140, // Ancho de la imagen
-            140  // Alto de la n
+            100, // Ancho de la imagen
+            100  // Alto de la imagen
         )
-        imageParams.setMargins(0, 20, 16, 0)
+        imageParams.setMargins(0, 0, 16, 0)
         imageView.layoutParams = imageParams
         itemLayout.addView(imageView)
 
         // Crear y agregar TextView
         val textView = TextView(context)
-        textView.text = "Title: ${featureInfo.title}\nPhone: ${featureInfo.phoneNumber}\nCoordinates: ${featureInfo.latitude}, ${featureInfo.longitude}\n"
+        textView.text = "Title: ${featureInfo.title}\nPhone: ${featureInfo.phoneNumber}\n"
         itemLayout.addView(textView)
+
+        // Configurar coordenadas como tag en el itemLayout
+        itemLayout.tag = Pair(featureInfo.latitude, featureInfo.longitude)
 
         // Configurar evento OnClickListener para abrir Google Maps
         itemLayout.setOnClickListener {
-            val mapsUrl = "https://www.google.com/maps?q=${featureInfo.latitude},${featureInfo.longitude}"
+            val (latitude, longitude) = itemLayout.tag as Pair<Double, Double>
+            val mapsUrl = "https://www.google.com/maps?q=$latitude,$longitude"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapsUrl))
             context.startActivity(intent)
         }
